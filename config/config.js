@@ -13,6 +13,7 @@ const plugins = [
     {
       antd: true,
       dva: {
+        immer: true,
         hmr: true,
       },
       locale: {
@@ -30,11 +31,11 @@ const plugins = [
       },
       pwa: pwa
         ? {
-            workboxPluginMode: 'InjectManifest',
-            workboxOptions: {
-              importWorkboxFrom: 'local',
-            },
-          }
+          workboxPluginMode: 'InjectManifest',
+          workboxOptions: {
+            importWorkboxFrom: 'local',
+          },
+        }
         : false, // default close dll, because issue https://github.com/ant-design/ant-design-pro/issues/4665
       // dll features https://webpack.js.org/plugins/dll-plugin/
       // dll: {
@@ -94,6 +95,30 @@ export default {
           component: './Welcome',
         },
         {
+          path: '/employee',
+          name: 'employee',
+          icon: 'team',
+          component: './employee'
+        },
+        {
+          path: '/employee/create',
+          name: 'createEmployee',
+          component: './employee/Form',
+          hideInMenu: true
+        },
+        {
+          path: '/employee/update/:id',
+          name: 'updateEmployee',
+          component: './employee/Form',
+          hideInMenu: true
+        },
+        {
+          path: '/employee/:id',
+          name: 'employeeDetail',
+          component: './employee/Detail',
+          hideInMenu: true
+        },
+        {
           component: './404',
         },
       ],
@@ -144,13 +169,11 @@ export default {
     basePath: '/',
   },
   chainWebpack: webpackPlugin,
-  /*
   proxy: {
-    '/server/api/': {
-      target: 'https://preview.pro.ant.design/',
+    '/api': {
+      target: 'http://10.2.5.60:1337/',
       changeOrigin: true,
-      pathRewrite: { '^/server': '' },
+      pathRewrite: { '^/api': '' },
     },
   },
-  */
 };
